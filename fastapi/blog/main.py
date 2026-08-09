@@ -6,12 +6,13 @@ from app.models.models import Base, postSchema
 from typing import Annotated
 from app.auth.jwt_bearer import jwtBearer
 import app.auth.auth as auth
+import app.profil.profil as profil
 
 
 
-
-app = FastAPI(dependencies=[Depends(jwtBearer())])
+app = FastAPI()
 app.include_router(auth.router)
+app.include_router(profil.router)
 
 
 Base.metadata.create_all(bind=engine)
@@ -40,7 +41,7 @@ lenpost = Annotated[int, Depends(length_post)]
 def greet():
     return "Helle Kevins"
 
-@app.post("/post/", tags=["Post"])
+@app.post("/post/", tags=["Post"], dependencies=[Depends(jwtBearer())])
 async def creat_post(post:posts, db:db):
     post_db = postSchema(title=post.title, content=post.content)
     db.add(post_db)
@@ -48,7 +49,7 @@ async def creat_post(post:posts, db:db):
     return {"message":"post added successfuly"}
     
     
-@app.get("/post/", tags=["Post"])
+@app.get("/post/", tags=["Post"], dependencies=[Depends(jwtBearer())])
 async def get_post (db:db, 
                     lenpost : lenpost,
                     limit : Annotated[int, Query(description="Number of post you want")]=None, 

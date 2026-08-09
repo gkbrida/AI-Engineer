@@ -23,8 +23,7 @@ def creat_jwt(data : dict):
 def decode_jwt(token:str):
     try: 
         decode_token = jwt.decode(token, secret, algorithm)
-        if decode_token.expire < datetime.now(timezone.utc):
-            return None
+        
         return decode_token  
     except:
         return {}

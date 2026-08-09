@@ -1,12 +1,13 @@
 fastapi
 uvicorn
-"pwdlib[argon2]"
-"pwdlib[bcrypt]"
-"python-jose[cryptography]"
-"python-multipart"
+pwdlib[argon2]
+pwdlib[bcrypt]
+python-jose[cryptography]
+python-multipart
 jwt
 passlib
 sqlalchemy
 psycopg2-binary
-dotenv / decouple
+dotenv 
+python-decouple
 alembic 
